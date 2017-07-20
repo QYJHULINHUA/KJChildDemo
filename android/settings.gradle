@@ -1,0 +1,3 @@
+rootProject.name = 'KJChlidDemo'
+
+include ':app'
