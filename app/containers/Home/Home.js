@@ -1,10 +1,8 @@
 
 import React,{Component} from 'react';
 import {
-  View,
-  StyleSheet,
-  Text,
   Image,
+  ScrollView
 
 } from 'react-native';
 
@@ -15,6 +13,17 @@ import { userInfoAction} from '../../myRedux/action/user_action.js'
 import {storageLoginStatus,getLoginStatus} from '../../dataBase/userinfoStorage.js'
 import {loginAccount} from '../../network/UserNetApi.js'
 import HeaderView from '../../components/JKHeader/HeaderView1.js'
+
+
+import {SeparatorLine} from '../../components/SeparatorLine.js'
+import {NavigationCard} from './NavigationCard'
+import {SwiperImage} from './SwiperImage.js'
+import {BabyRank} from './BabyRank'
+import {BabyKnowledge} from './BabyKnowledge'
+import {SocialFocus} from './SocialFocus'
+import {ExpertSolution} from './ExpertSolution'
+
+
 
 class Home extends Component {
 
@@ -77,7 +86,6 @@ class Home extends Component {
   }
 
 
-
   static navigationOptions = {
     tabBarLabel: '首页',
     tabBarIcon:({tintColor})=>(
@@ -96,10 +104,39 @@ class Home extends Component {
 
   render(){
     console.log('首页刷新');
+    let renderList = [require('./img/1.jpg'),require('./img/2.jpg'),require('./img/3.jpg'),require('./img/4.jpg')];
+    let dataSoureeee = '宝宝排名';
     return(
-      <View>
-        <Text>首页</Text>
-      </View>
+
+      <ScrollView>
+
+        {/**推荐的轮播图*/}
+        <SwiperImage renderList={renderList}/>
+
+        {/**宝宝排名*/}
+        <BabyRank dataSource={dataSoureeee}/>
+
+        {/**一大堆的功能导航卡*/}
+        <SeparatorLine/>
+        <NavigationCard/>
+
+        {/**育儿知识*/}
+        <SeparatorLine/>
+        <BabyKnowledge/>
+
+        {/**社会焦点*/}
+        <SeparatorLine/>
+        <SocialFocus/>
+
+        {/**专家解答*/}
+        <SeparatorLine/>
+        <ExpertSolution/>
+
+        {/**以物换物*/}
+        <SeparatorLine/>
+
+      </ScrollView>
+
 
     );
   }
