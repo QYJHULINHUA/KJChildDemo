@@ -11,6 +11,7 @@
 		"react-native": "0.44.0",
 		"react-native-easy-toast": "^1.0.6",
 		"react-native-parallax-view": "^2.0.6",
+		"react-native-scrollable-tab-view": "^0.6.7",
 		"react-native-storage": "^0.2.2",
 		"react-native-swiper": "^1.5.4",
 		"react-native-wxui": "^0.1.3",

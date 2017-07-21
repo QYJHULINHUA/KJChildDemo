@@ -10,6 +10,9 @@ import {
 import { connect } from 'react-redux';
 import {tabBarIconStyle} from '../../utils/KJStylesE.js'
 import HeaderView from '../../components/JKHeader/HeaderView1.js'
+import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
+import {navBarStyle} from '../../utils/KJStylesE.js'
+import CourseList from './CourseList.js'
 
 
 class Course extends Component {
@@ -25,9 +28,23 @@ class Course extends Component {
 
   render(){
     return(
-      <View>
-        <Text>jjjj</Text>
-      </View>
+
+      <ScrollableTabView
+        tabBarUnderlineStyle={{backgroundColor:navBarStyle.theme_color,height:3}}
+        tabBarActiveTextColor={navBarStyle.theme_color}
+        tabBarInactiveTextColor='#898989'
+        renderTabBar={() => <DefaultTabBar />}
+        style={{backgroundColor:'white'}}
+        >
+
+        <CourseList tabLabel='免费好课'/>
+        <CourseList tabLabel='推荐好课'/>
+        <CourseList tabLabel='免费专题'/>
+
+      </ScrollableTabView>
+
+
+
     );
   }
 }

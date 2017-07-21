@@ -62,13 +62,13 @@ export const NavigationCard = ({listData1,listData2,onPressFun}) => (
 
 NavigationCard.defaultProps = {
   listData1:[
-    {title:'社会焦点',url:require('./img/homeTest.png')},
-    {title:'育儿知识',url:require('./img/homeTest.png')},
-    {title:'宝贝帮',url:require('./img/homeTest.png')},
-    {title:'课程',url:require('./img/homeTest.png')}],
+    {title:'社会焦点',url:require('./img/shehuijiaodian.png')},
+    {title:'育儿知识',url:require('./img/yuerzhishi.png')},
+    {title:'宝贝帮',url:require('./img/baobeibang.png')},
+    {title:'课程',url:require('./img/kechen.png')}],
   listData2:[
-    {title:'专家帮助',url:require('./img/homeTest.png')},
-    {title:'宝贝活动',url:require('./img/homeTest.png')},
-    {title:'宝贝评测',url:require('./img/homeTest.png')},
-    {title:'集市',url:require('./img/homeTest.png')}]
+    {title:'专家帮助',url:require('./img/zhuanjiabangzhu.png')},
+    {title:'宝贝活动',url:require('./img/baobeihuodong.png')},
+    {title:'宝贝评测',url:require('./img/baobeipingce.png')},
+    {title:'集市',url:require('./img/jishi.png')}]
 }
