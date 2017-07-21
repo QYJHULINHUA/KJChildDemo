@@ -2,17 +2,73 @@
 
 import {
   View,
-  Text
+  Text,
+  Dimensions,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
-export const NavigationCard = ({separatorStyle}) => (
+const { width } = Dimensions.get('window')
+
+
+
+const ItemCard = ({item,width,height}) => (
+
+  <View style={{width:width,height:height,justifyContent:'center',alignItems:'center'}}>
+
+    <Image resizeMode='stretch' style={{width:30,height:30}} source={item.url} />
+    <View style={{height:10}}></View>
+    <Text style={{color:'#404040',fontSize:12}}>{item.title}</Text>
+
+  </View>
+);
+
+
+export const NavigationCard = ({listData1,listData2,onPressFun}) => (
   <View style={{height:160,backgroundColor:'white'}}>
     <View style={{height:80,flexDirection:'row',justifyContent:'space-between'}}>
-      <Text>😊 社会焦点</Text><Text>😄育儿知识</Text><Text>😢宝贝帮</Text><Text>😁课程</Text>
+      {
+        listData1.map((item,idx)=>{
+          return(
+            <TouchableOpacity
+              key={idx}
+              onPress={()=>{
+                onPressFun(item.title)
+              }}>
+            <ItemCard height={80} width={width/4} item={item}/>
+          </TouchableOpacity>
+          )
+        })
+      }
     </View>
 
     <View style={{height:80,flexDirection:'row',justifyContent:'space-between'}}>
-      <Text>😊 专家帮助</Text><Text>😄宝贝活动</Text><Text>😢宝贝评测</Text><Text>😁集市</Text>
+      {
+        listData2.map((item,idx)=>{
+          return(
+            <TouchableOpacity
+              key={idx}
+              onPress={()=>{
+                onPressFun(item.title)
+              }}>
+            <ItemCard height={80} width={width/4} item={item}/>
+          </TouchableOpacity>
+          )
+        })
+      }
     </View>
   </View>
 );
+
+NavigationCard.defaultProps = {
+  listData1:[
+    {title:'社会焦点',url:require('./img/homeTest.png')},
+    {title:'育儿知识',url:require('./img/homeTest.png')},
+    {title:'宝贝帮',url:require('./img/homeTest.png')},
+    {title:'课程',url:require('./img/homeTest.png')}],
+  listData2:[
+    {title:'专家帮助',url:require('./img/homeTest.png')},
+    {title:'宝贝活动',url:require('./img/homeTest.png')},
+    {title:'宝贝评测',url:require('./img/homeTest.png')},
+    {title:'集市',url:require('./img/homeTest.png')}]
+}

@@ -83,6 +83,21 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this._defaultLoginUser();
+    this._NavigationCardClick=this._NavigationCardClick.bind(this);
+
+  }
+
+  _NavigationCardClick(title){
+    console.log(`click item ${title}`);
+    switch (title) {
+      case '课程':
+        console.log('课程');
+
+        break;
+      default:
+        console.log('其他');
+
+    }
   }
 
 
@@ -118,7 +133,10 @@ class Home extends Component {
 
         {/**一大堆的功能导航卡*/}
         <SeparatorLine/>
-        <NavigationCard/>
+        <NavigationCard onPressFun={(str)=>{
+          this._NavigationCardClick(str);
+
+        }}/>
 
         {/**育儿知识*/}
         <SeparatorLine/>
