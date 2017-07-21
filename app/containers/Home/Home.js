@@ -91,7 +91,8 @@ class Home extends Component {
     console.log(`click item ${title}`);
     switch (title) {
       case '课程':
-        console.log('课程');
+        const { navigate } = this.props.navigation;
+        navigate('Course')
 
         break;
       default:

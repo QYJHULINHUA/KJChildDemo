@@ -170,14 +170,4 @@ function select(store){
 
  export default connect(select)(MyBaby);
 
-
- // renderItem={({ item }) => (
-//
- // <CellItem/>
- //
- //
- //   /* <View>
- //     <Text>{`${item.name.first} ${item.name.last}`}</Text>
- //     <Text>{item.email}</Text>
- //   </View> */
- // )}
+ 
