@@ -55,6 +55,11 @@ class CourseList extends Component {
 
   );
 
+  _selectTagIdx(idx: string){
+    console.log(`tag is : ${idx} `);
+
+  }
+
   render(){
 
     let dd = [
@@ -66,14 +71,17 @@ class CourseList extends Component {
       {key:'0021',tagTitle:'1-3岁'},
       {key:'0031',tagTitle:'3-10岁'},
       {key:'0041',tagTitle:'肢体行知'},
-    ]
+    ];
 
     return(
 
       <View style={styles.container}>
 
         <View style={{backgroundColor:'#F3F3F3',height:50}}>
-          <CourseTagList tagData = {dd} rowHeight={50}/>
+          <CourseTagList
+            selectItem = {this._selectTagIdx}
+            tagData = {dd}
+            rowHeight={50}/>
         </View>
 
         <View style={{height:10}}/>

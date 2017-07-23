@@ -9,33 +9,61 @@ import {
   Text,
   FlatList,
   Dimensions,
+  TouchableHighlight
 } from 'react-native';
+import {navBarStyle} from '../../utils/KJStylesE.js';
+const { width } = Dimensions.get('window');
 
-import {navBarStyle} from '../../utils/KJStylesE.js'
+class MyListItem extends React.PureComponent {
+  _onPress = () => {
+    this.props.onPressItem(this.props.item.key);
+  };
 
-
-const { width } = Dimensions.get('window')
+  render() {
+    return (
+      <TouchableHighlight
+        underlayColor={'transparent'}
+        onPress={this._onPress}>
+        <View style={[styles.itemContainer,{height:this.props.rowHeight}]}>
+          <View style={this.props.selectedStr === this.props.item.key?styles.itemButtonSelected:styles.itemButton}>
+            <Text style={this.props.selectedStr === this.props.item.key?{color:'white'}:{color:'#898989'}}>
+              {this.props.item.tagTitle}
+            </Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+}
 
 export default class CourseTagList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this._renderItem = this._renderItem.bind(this);
-
-
-
-  }
 
   static propTypes = {
     tagData:React.PropTypes.array.isRequired,
     rowHeight:React.PropTypes.number.isRequired,
-  }
+    // selectItem:React.propTypes.func.isRequired,
+  };
+
+  constructor(props) {
+      super(props);
+      this.state = { keyStr: '' };
+
+    }
+
+  _onPressItem = (idStr: string) => {
+    this.props.selectItem(idStr)
+    this.setState({ keyStr: idStr})
+
+  };
 
   _renderItem = ({item}) => (
-    <View style={[styles.itemContainer,{height:this.props.rowHeight}]}>
-      <View style={styles.itemButton}>
-        <Text style={styles.textStyle}>{item.tagTitle}</Text>
-      </View>
-    </View>
+    <MyListItem
+      onPressItem={this._onPressItem}
+      item={item}
+      rowHeight={this.props.rowHeight}
+      selectedStr={this.state.keyStr}
+    />
+
   );
 
   render(){
@@ -46,6 +74,7 @@ export default class CourseTagList extends React.PureComponent {
           showsHorizontalScrollIndicator={false}
           data={this.props.tagData}
           horizontal={true}
+          extraData={this.state.keyStr}
           renderItem={this._renderItem}/>
       </View>
 
@@ -69,6 +98,16 @@ const styles = StyleSheet.create({
     height:26,
     backgroundColor:'white',
     // backgroundColor:navBarStyle.theme_color,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+
+  itemButtonSelected:{
+    borderRadius:10,
+    width:80,
+    height:26,
+    // backgroundColor:'white',
+    backgroundColor:navBarStyle.theme_color,
     justifyContent:'center',
     alignItems:'center'
   },
