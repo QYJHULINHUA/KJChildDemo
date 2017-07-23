@@ -27,6 +27,8 @@ class Course extends Component {
   });
 
   render(){
+
+
     return(
 
       <ScrollableTabView
@@ -44,12 +46,12 @@ class Course extends Component {
       </ScrollableTabView>
 
 
-
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
   },
