@@ -11,11 +11,12 @@ export default class Wallpaper extends Component {
 
 	static propsTypes = {
 		// bgSrc:React.PropTypes.string,
+		// imageStyle
 	}
 
 	render() {
 		return (
-			<Image style={styles.picture} source={this.props.bgSrc}>
+			<Image style={[styles.picture,this.props.imageStyle]} source={this.props.bgSrc}>
 				{this.props.children}
 			</Image>
 		);

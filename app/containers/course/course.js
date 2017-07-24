@@ -26,9 +26,17 @@ class Course extends Component {
     }} />,
   });
 
+
+
+
   render(){
 
-
+    let tagData:[
+      {key:'001',tagTitle:'0-1岁'},
+      {key:'002',tagTitle:'1-3岁'},
+      {key:'003',tagTitle:'3-10岁'},
+      {key:'004',tagTitle:'肢体行知'},
+    ];
     return(
 
       <ScrollableTabView
@@ -39,9 +47,31 @@ class Course extends Component {
         style={{backgroundColor:'white'}}
         >
 
-        <CourseList tabLabel='免费好课'/>
-        <CourseList tabLabel='推荐好课'/>
-        <CourseList tabLabel='免费专题'/>
+          <CourseList
+            onPressCell={(item)=>{
+              console.log(`点击课程： ${item}`);
+
+              const { navigate } = this.props.navigation;
+              navigate('CourseDetails',{courseItem:item})
+            }}
+            tabLabel='免费好课'/>
+
+          <CourseList
+            onPressCell={(item)=>{
+              console.log(`点击课程： ${item}`);
+
+              const { navigate } = this.props.navigation;
+              navigate('CourseDetails',{courseItem:item})
+            }}
+            tabLabel='推荐好课'/>
+          <CourseList
+            onPressCell={(item)=>{
+              console.log(`点击课程： ${item}`);
+
+              const { navigate } = this.props.navigation;
+              navigate('CourseDetails',{courseItem:item})
+            }}
+            tabLabel='免费专题'/>
 
       </ScrollableTabView>
 
