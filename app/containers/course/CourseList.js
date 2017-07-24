@@ -23,23 +23,31 @@ class CourseList extends Component {
       data:[
         {key:'001',title:'婴儿运动与智力发育密切相关',url:require('./img/test.png'),money:'免费'},
         {key:'002',title:'新生儿饮食的护理',url:require('./img/test.png'),money:'免费'},
-        {key:'003',title:'怎么判断孩子是否吃饱了',url:require('./img/test.png'),money:'¥12.00'},
-        {key:'004',title:'3个月时可训练宝宝的翻身',url:require('./img/test.png'),money:'免费'},
-        {key:'005',title:'如何制作混合奶',url:require('./img/test.png'),money:'免费'},
-        {key:'006',title:'宝宝夜啼怎么哄',url:require('./img/test.png'),money:'¥69.00'},
-        {key:'007',title:'小宝宝为何会罢奶',url:require('./img/test.png'),money:'免费'},
-        {key:'008',title:'英语教学需要多元智能理论',url:require('./img/test.png'),money:'免费'},
-        {key:'009',title:'给宝宝创造学爬的好环境',url:require('./img/test.png'),money:'免费'},
-        {key:'0010',title:'怎么教孩子数数效果最好',url:require('./img/test.png'),money:'免费'},
-        {key:'0011',title:'宝宝怎么进行启智训练',url:require('./img/test.png'),money:'免费'},
-        {key:'0012',title:'音乐魅力',url:require('./img/test.png'),money:'免费'},
-        {key:'0013',title:'奥尔夫的音乐活动',url:require('./img/test.png'),money:'免费'},
-        {key:'0014',title:'幼儿语言教育的略谈',url:require('./img/test.png'),money:'免费'},
-        {key:'0015',title:'珠算',url:require('./img/test.png'),money:'免费'},
+        // {key:'003',title:'怎么判断孩子是否吃饱了',url:require('./img/test.png'),money:'¥12.00'},
+        // {key:'004',title:'3个月时可训练宝宝的翻身',url:require('./img/test.png'),money:'免费'},
+        // {key:'005',title:'如何制作混合奶',url:require('./img/test.png'),money:'免费'},
+        // {key:'006',title:'宝宝夜啼怎么哄',url:require('./img/test.png'),money:'¥69.00'},
+        // {key:'007',title:'小宝宝为何会罢奶',url:require('./img/test.png'),money:'免费'},
+        // {key:'008',title:'英语教学需要多元智能理论',url:require('./img/test.png'),money:'免费'},
+        // {key:'009',title:'给宝宝创造学爬的好环境',url:require('./img/test.png'),money:'免费'},
+        // {key:'0010',title:'怎么教孩子数数效果最好',url:require('./img/test.png'),money:'免费'},
+        // {key:'0011',title:'宝宝怎么进行启智训练',url:require('./img/test.png'),money:'免费'},
+        // {key:'0012',title:'音乐魅力',url:require('./img/test.png'),money:'免费'},
+        // {key:'0013',title:'奥尔夫的音乐活动',url:require('./img/test.png'),money:'免费'},
+        // {key:'0014',title:'幼儿语言教育的略谈',url:require('./img/test.png'),money:'免费'},
+        // {key:'0015',title:'珠算',url:require('./img/test.png'),money:'免费'},
       ]
     }
 
     this._renderItem = this._renderItem.bind(this);
+  }
+
+  static propTypes = {
+    tagListShow:React.PropTypes.bool,//是否显示返回按钮
+  }
+
+  static defaultProps = {
+    tagListShow: true,
   }
 
 
@@ -89,13 +97,17 @@ class CourseList extends Component {
 
 
       <View style={styles.container}>
+        {
+          this.props.tagListShow?<View style={{backgroundColor:'#F3F3F3',height:50}}>
+            <CourseTagList
+              selectItem = {this._selectTagIdx}
+              tagData = {dd}
+              rowHeight={50}/>
+          </View>:null
 
-        <View style={{backgroundColor:'#F3F3F3',height:50}}>
-          <CourseTagList
-            selectItem = {this._selectTagIdx}
-            tagData = {dd}
-            rowHeight={50}/>
-        </View>
+        }
+
+
 
         <View style={{height:10}}/>
 

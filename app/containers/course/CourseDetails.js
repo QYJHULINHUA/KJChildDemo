@@ -19,6 +19,7 @@ import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-vi
 import {navBarStyle} from '../../utils/KJStylesE.js'
 
 import CourseIntroduce from './CoureseIntroduce.js'
+import CourseEvaluate from './CourseEvaluate'
 
 
 class CourseDetails extends Component {
@@ -53,7 +54,7 @@ class CourseDetails extends Component {
 
           <CourseIntroduce tabLabel='介绍'/>
           <Text tabLabel='目录'>ttt</Text>
-          <Text tabLabel='评价'>ttt</Text>
+          <CourseEvaluate tabLabel='评价'/>
           <Text tabLabel='咨询'>ttt</Text>
 
 

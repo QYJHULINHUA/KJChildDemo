@@ -1,8 +1,5 @@
 
 
-
-
-
 function storageLoginStatus(username,password,isLoggedIn) {
 
   storage.save({

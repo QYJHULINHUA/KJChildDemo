@@ -1,8 +1,5 @@
 
 
-
-
-
 import {
   View,
   Text
