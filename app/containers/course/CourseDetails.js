@@ -89,7 +89,7 @@ class CourseDetails extends Component {
 
           <CourseIntroduce sourceData={this.state.detailsData} tabLabel='介绍'/>
           <Text tabLabel='目录'>ttt</Text>
-          <CourseEvaluate tabLabel='评价'/>
+          <CourseEvaluate sourceData={this.state.detailsData} tabLabel='评价'/>
           <Text tabLabel='咨询'>ttt</Text>
 
 

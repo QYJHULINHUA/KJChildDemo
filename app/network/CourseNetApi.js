@@ -24,6 +24,14 @@ function getcourseDetail(bodydata,callback) {
   NetWork_Post(netapi,bodydata,callback,reqError);
 }
 
+function getCourseEvaluate(bodydata,callback) {
+  console.log('请求课程评论',bodydata);
+
+  let netapi = 'getCourseEvaluate',reqError = {error:{code:'-1',msg:'加载数据失败'}};
+  NetWork_Post(netapi,bodydata,callback,reqError);
+}
+
+
 
 
 
@@ -31,4 +39,5 @@ export {
   getCourseList,
   getSpecialRecommendationList,
   getcourseDetail,
+  getCourseEvaluate,
 }

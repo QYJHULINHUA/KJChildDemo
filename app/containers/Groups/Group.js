@@ -124,7 +124,6 @@ class Group extends Component {
 
 
            <View style={[styles.itemView,{justifyContent:'center',alignItems :'center'}]}>
-
              <Image
                style={{width:25,height:25}}
                source={require('./add.png')}/>

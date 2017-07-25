@@ -10,52 +10,107 @@ import {
 
 
 } from 'react-native';
+import {BASEURL} from '../../utils/netUtils.js'
+import StarRating from 'react-native-star-rating';
+import {navBarStyle} from '../../utils/KJStylesE.js'
 
-import { connect } from 'react-redux';
 const { width } = Dimensions.get('window')
 const leftMargin = 16;
 import {SectionTitle} from './SectionTitle.js'
 import KJC_Button from '../../components/JKButton.js'
+import {getCourseEvaluate} from '../../network/CourseNetApi.js'
 
-function getItemListData() {
 
-  var tempList = [];
-  for (var i = 0; i < 20; i++) {
-    let itemData = {
-      key:i,
-      evaluate:'婴儿运动与智力发育密切相关',
-      url:require('./img/test.png')
-    }
-    tempList.push(itemData)
-  }
-  return tempList;
-}
-
-class CourseEvaluate extends Component {
+export default class CourseEvaluate extends Component {
   constructor(props) {
     super(props);
-    let dd =  getItemListData();
+
     this.state={
-      data:dd,
+      data:[],
+    }
+  }
+
+  static defaultProps ={
+    sourceData:{},
+
+  }
+
+  componentDidMount() {
+    this.makeRemoteRequest();
+  }
+
+  makeRemoteRequest(){
+    if (this.props.sourceData.Id) {
+      let formData = {
+        lessonId:this.props.sourceData.Id,
+      }
+      getCourseEvaluate(formData,(responseData)=>{
+        let code = responseData['code'];
+        let data = responseData['data'];
+        if (code === '1') {
+          this.setState({
+            data:data,
+          })
+        }
+
+      })
+
     }
 
   }
 
-  _renderItem = ({item}) => (
-    <TouchableHighlight
-      underlayColor={'transparent'}
-      onPress={()=>{
-        // this.props.onPressCell(item);
-      }}>
-        <View style={{width:width/2,height:210,justifyContent:'center',alignItems:'center'}}>
-          <Text>haha</Text>
+  onStarRatingPress(rating){
+    console.log(rating);
+  }
+  _renderItem = (item) => {
+    console.log(item);
+    return(
+      <View style={{flexDirection:'row',width:width,height:100,borderBottomWidth:1,borderBottomColor:'#D2D2D2'}}>
+        <View style={{width:76,height:100}}>
+          <Image
+            style={{top:10,left:16,width:50,height:50}}
+            source={{url:`${BASEURL}${item.item.HeadImg}`}} />
 
         </View>
-    </TouchableHighlight>
-  );
+
+        <View style={{width:width-76,height:100,}}>
+          <Text style={{left:5,top:10,right:10,height:50}}>
+            {item.item.Content}
+
+          </Text>
+
+          <View style={{left:5,top:10,right:10,height:20,flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:100}}>
+              <StarRating
+              starSize={18}
+              disabled={false}
+              maxStars={5}
+              rating={2}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+              starColor={navBarStyle.theme_color}/>
+            </View>
+            <Text>    </Text>
+            <Text style={{color:'#898989'}}>{2.0}分</Text>
+
+            <Text>    </Text>
+            <Text style={{color:'#898989'}}>2017/02/11</Text>
+
+          </View>
+
+
+
+        </View>
+
+
+      </View>
+    )
+  }
+
+
 
 
   render(){
+    console.log(this.state.data);
     return(
       <View style={styles.container}>
         <SectionTitle
@@ -65,6 +120,7 @@ class CourseEvaluate extends Component {
 
           <FlatList
             data={this.state.data}
+            keyExtractor={item => item.Id}
             initialNumToRender={6}
             renderItem={this._renderItem}/>
 
@@ -89,8 +145,3 @@ const styles = StyleSheet.create({
     width:width,
   },
 });
-function select(store){
-   return {
-   }
-}
-export default connect(select)(CourseEvaluate);

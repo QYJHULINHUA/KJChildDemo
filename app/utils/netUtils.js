@@ -10,9 +10,11 @@ var reqUrl = {
   myGroups:BASEURL + '/api/Circle/myFocusCircle',
   tuijianGroups:BASEURL + '/api/Circle/recommendCircle',
 
-  /**免费课程、畅销课程*/
+  /**免费课程、畅销课程、课程评论*/
   getCourseList:BASEURL + '/Api/Course/freeAdmission',
   courseDetail:BASEURL + '/Api/Course/lessonDetail',
+  getCourseEvaluate:BASEURL + '/Api/Course/getComment',
+
   /** 专题推荐*/
   getSpecialRecommendation:BASEURL + '/api/Course/specialRecommendation',
 
