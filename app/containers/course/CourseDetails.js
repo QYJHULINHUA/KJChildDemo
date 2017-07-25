@@ -20,26 +20,63 @@ import {navBarStyle} from '../../utils/KJStylesE.js'
 
 import CourseIntroduce from './CoureseIntroduce.js'
 import CourseEvaluate from './CourseEvaluate'
+import {getcourseDetail} from '../../network/CourseNetApi.js'
+import {BASEURL} from '../../utils/netUtils.js'
+
 
 
 class CourseDetails extends Component {
   constructor(props) {
     super(props);
+    this.makeRemoteRequest=this.makeRemoteRequest.bind(this);
+
+    this.state={
+      detailsData:{},
+    }
 
   }
 
   static navigationOptions = ({ navigation }) => ({
-    header:<HeaderView tilte={navigation.state.params.courseItem.title}  showBack={true} backBtnOnPress={()=>{
+    header:<HeaderView tilte={navigation.state.params.courseItem.ProName}  showBack={true} backBtnOnPress={()=>{
       navigation.goBack();
     }} />,
   });
 
+  componentDidMount() {
+    this.makeRemoteRequest();
+  }
+
+  makeRemoteRequest(){
+
+    let formData = {
+      UserId:this.props.uuid,
+      id:this.props.navigation.state.params.courseItem.Id,
+    }
+
+    getcourseDetail(formData,(responseData)=>{
+      let code = responseData['code'];
+      let msg = responseData['msg'];
+      let data = responseData['data'];
+      if (code === '1') {
+
+        this.setState({
+          detailsData:data,
+        })
+
+      }else {
+
+      }
+
+    })
+  }
+
   render(){
+
     return(
       <View style={styles.container}>
         <Image
         style={{height:180}}
-        source={{uri: 'http://pic.baike.soso.com/p/20131203/20131203133649-2126513849.jpg'}}
+        source={{url:`${BASEURL}${this.state.detailsData.ProImg}`}}
       />
 
       <ScrollableTabView
@@ -50,7 +87,7 @@ class CourseDetails extends Component {
         style={{backgroundColor:'white'}}
         >
 
-          <CourseIntroduce tabLabel='介绍'/>
+          <CourseIntroduce sourceData={this.state.detailsData} tabLabel='介绍'/>
           <Text tabLabel='目录'>ttt</Text>
           <CourseEvaluate tabLabel='评价'/>
           <Text tabLabel='咨询'>ttt</Text>
@@ -71,6 +108,7 @@ const styles = StyleSheet.create({
 });
 function select(store){
    return {
+     uuid:store.userInfo.user_id,
    }
 }
 export default connect(select)(CourseDetails);

@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import KJC_Button from '../../components/JKButton.js'
 
-import { connect } from 'react-redux';
+
 import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window')
 import {navBarStyle} from '../../utils/KJStylesE.js'
@@ -23,13 +23,17 @@ const leftMargin = 16;
 
 const courseContext = '《红楼梦》，原名《石头记》，中国古典长篇章回小说，是中国四大小说名著之一。《红楼梦》书内提及的书名，还有《情僧录》、《风月宝鉴》、《金陵十二钗》、《金玉缘》，乾隆四十九年甲辰（1784年）梦觉主人序本题为《红楼梦》（甲辰梦序抄本）。1791年在第一次活字印刷后（程甲本），《红楼梦》便取代《石头记》而成为通行的书名。 原本共120回，但后40回失传。后来高鹗、程伟元声称取得后40回稿，并整理印行，即为目前较通行的120回全本。现今学界普遍认为通行本前八十回为曹雪芹所作，后四十回不知为何人所作。但民间普遍认为为高鹗所作，另有一说为高鹗、程伟元二人合作著续。人民文学出版社认为';
 
-class CourseIntroduce extends Component {
+export default class CourseIntroduce extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 3.5,
       teacherAvatar:'http://p3.wmpic.me/article/2014/07/29/1406605856_wMlLrnQe.jpg'
     };
+
+  }
+
+  static defaultProps ={
+    sourceData:{},
 
   }
   onStarRatingPress(rating) {
@@ -40,10 +44,12 @@ class CourseIntroduce extends Component {
 
 
   render(){
+    console.log('sourceData',this.props.sourceData);
+    let sourceData = this.props.sourceData;
     return(
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={{left:leftMargin,width:120,height:20,justifyContent:'center'}}>
-          <Text style={{color:'#000000',fontWeight:'400'}}>行知能力</Text>
+        <View style={{left:leftMargin,width:200,height:20,justifyContent:'center'}}>
+          <Text style={{color:'#000000',fontWeight:'400'}}>{sourceData.ProName}</Text>
         </View>
 
         <View style={{height:30,alignItems:'center',flexDirection:'row',borderBottomWidth:1,borderBottomColor:'#D2D2D2'}}>
@@ -52,13 +58,13 @@ class CourseIntroduce extends Component {
           starSize={18}
           disabled={false}
           maxStars={5}
-          rating={this.state.starCount}
+          rating={sourceData.flag}
           selectedStar={(rating) => this.onStarRatingPress(rating)}
           starColor={navBarStyle.theme_color}/>
           <Text>   </Text>
-          <Text>{this.state.starCount}分</Text>
+          <Text>{sourceData.flag}分</Text>
           <Text>   </Text>
-          <Text>1123人学过</Text>
+          <Text>{sourceData.BrowseTimes}人学过</Text>
         </View>
 
         <SectionTitle
@@ -68,7 +74,7 @@ class CourseIntroduce extends Component {
           <Text
             numberOfLines={4}
             style={{height:75,paddingVertical:13,paddingLeft:15,paddingRight:5,color:'#898989',fontSize:12}}>
-            {courseContext}
+            {sourceData.ProDesc}
           </Text>
 
         <SectionTitle
@@ -98,6 +104,7 @@ class CourseIntroduce extends Component {
             <CourseList
               tagListShow={false}
               scrollEnabled={false}
+              limit={2}
               onPressCell={(item)=>{
                 console.log(`点击课程： ${item}`);
 
@@ -136,8 +143,3 @@ const styles = StyleSheet.create({
     width:width,
   },
 });
-function select(store){
-   return {
-   }
-}
-export default connect(select)(CourseIntroduce);

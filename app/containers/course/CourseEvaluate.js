@@ -14,9 +14,6 @@ import {
 import { connect } from 'react-redux';
 const { width } = Dimensions.get('window')
 const leftMargin = 16;
-// import StarRating from 'react-native-star-rating';
-//
-// import {navBarStyle} from '../../utils/KJStylesE.js'
 import {SectionTitle} from './SectionTitle.js'
 import KJC_Button from '../../components/JKButton.js'
 

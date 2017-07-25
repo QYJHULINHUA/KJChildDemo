@@ -88,7 +88,7 @@ class CourseList extends Component {
     this.setState({ loading: true });
     getCourseList(formData,(responsedata)=>{
       let code = responsedata['code'];
-      console.log(responsedata);
+      // console.log(responsedata);
       if (code === '1') {
         if (responsedata['data'].length > 0) {
           this.setState({
@@ -99,7 +99,7 @@ class CourseList extends Component {
           });
 
         }else {
-          this.refs.toast.show(responsedata['msg']);
+          // this.refs.toast.show('未加载到更多数据');
           this.setState({
             data:[...this.state.data, ...responsedata['data']],
             page: this.state.page > 1 ? this.state.page-1:1,

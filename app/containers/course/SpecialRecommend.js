@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator,TouchableHighlight,Dimensions,Image } from "react-native";
+const { width } = Dimensions.get('window')
+import Toast, {DURATION} from 'react-native-easy-toast'
+import {getSpecialRecommendationList} from '../../network/CourseNetApi.js'
+import {BASEURL} from '../../utils/netUtils.js'
+
 
 class SpecilaRecommend extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: false,
       data: [],
-      page: 1,
-      error: null,
-      refreshing: false
     };
   }
 
@@ -19,93 +20,62 @@ class SpecilaRecommend extends Component {
   }
 
   makeRemoteRequest = () => {
-    const { page } = this.state;
-    const url = `https://randomuser.me/api/?seed=${1}&page=${page}&results=20`;
-    console.log(url);
-    this.setState({ loading: true });
+    getSpecialRecommendationList(null,(responsedata)=>{
+      let code = responsedata['code'];
+      let msg = responsedata['msg'];
+      let data = responsedata['data'];
+      console.log(responsedata);
 
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
-  };
+      if (code === '1') {
+        if (data.length > 0) {
+          this.setState({
+            data:data,
+          })
+        }else {
+          this.refs.toast.show('没有加载到更多数据');
+        }
 
-  handleRefresh = () => {
-    this.setState(
-      {
-        page: 1,
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
+      }else {
+          this.refs.toast.show(msg);
       }
-    );
+
+    })
+
+
   };
 
-  handleLoadMore = () => {
-    this.setState(
-      {
-        page: this.state.page + 1
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
-  };
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
+
+
+
+  _renderItem = ({item}) => (
+    <TouchableHighlight
+      underlayColor={'transparent'}
+      onPress={()=>{
+        console.log(item);
+        // this.props.onPressCell(item);
+      }}>
+      <View style={{width:width,height:240}}>
+        <Image
+        style={{height:150}}
+        source={{url:`${BASEURL}${item.Image}`}}
       />
-    );
-  };
-
-
-
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <ActivityIndicator animating size="large" />
+      <Text>{item.AdName}</Text>
+      <Text>{item.AdName}</Text>
       </View>
-    );
-  };
+  </TouchableHighlight>
+
+  );
 
   render() {
     return (
       <View containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
         <FlatList
           data={this.state.data}
-          renderItem={({item}) => <Text>{item.email}</Text>}
-          keyExtractor={item => item.email}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListFooterComponent={this.renderFooter}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
-          onEndReached={this.handleLoadMore}
-          onEndReachedThreshold={50}
+          renderItem={this._renderItem}
+          keyExtractor={item => item.Id}
         />
+        <Toast ref="toast" position="center"/>
       </View>
     );
   }

@@ -12,6 +12,10 @@ var reqUrl = {
 
   /**免费课程、畅销课程*/
   getCourseList:BASEURL + '/Api/Course/freeAdmission',
+  courseDetail:BASEURL + '/Api/Course/lessonDetail',
+  /** 专题推荐*/
+  getSpecialRecommendation:BASEURL + '/api/Course/specialRecommendation',
+
 };
 
 

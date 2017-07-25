@@ -5,7 +5,9 @@ import {
   StyleSheet,
   SectionList,
   Image,
-  Text
+  Text,
+  Dimensions,
+  TouchableHighlight,
 
 } from 'react-native';
 
@@ -13,11 +15,15 @@ import {
 import HeaderView from '../../components/JKHeader/HeaderView1.js'
 import {tabBarIconStyle} from '../../utils/KJStylesE.js'
 import {getTuiJianGroup ,getMyGroup} from '../../network/GroupNet.js'
+const { width } = Dimensions.get('window')
+import {BASEURL} from '../../utils/netUtils.js'
 
-const ITEM_HEIGHT = 50; //item的高度
-const HEADER_HEIGHT = 24;  //分组头部的高度
-const SEPARATOR_HEIGHT = 1;  //分割线的高度
+const ITEM_HEIGHT = 60; //item的高度
+const HEADER_HEIGHT = 30;  //分组头部的高度
+const marginLeft = 16;
 
+
+let myGro_itme = [{Id:'-100',CircleName:'添加圈子'}];
 let myGroupData = [];
 let tuijianGroupData = [];
 class Group extends Component {
@@ -37,7 +43,7 @@ class Group extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data:[{key:'myGroups',data:myGroupData,msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
+      data:[{key:'myGroups',data:[...myGroupData,...myGro_itme],msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
 
     };
 
@@ -51,23 +57,20 @@ class Group extends Component {
       userId:uuid,
     }
     await getMyGroup(formData,(responseData)=>{
-      // console.log('我的圈子回调：',uuid,responseData);
-      // console.log('我的圈子回调：');
       if (responseData['code'] === '1') {
+
         myGroupData = responseData['data'];
         this.setState({
-          data:[{key:'myGroups',data:myGroupData,msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
+          data:[{key:'myGroups',data:[...myGroupData,...myGro_itme],msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
         })
       }
 
     });
     await getTuiJianGroup(formData,(responseData)=>{
-      // console.log('推荐圈子回调：',uuid,responseData);
-      // console.log('推荐圈子回调：');
       if (responseData['code'] === '1') {
         tuijianGroupData = responseData['data'];
         this.setState({
-          data:[{key:'myGroups',data:myGroupData,msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
+          data:[{key:'myGroups',data:[...myGroupData,...myGro_itme],msg:'我的圈子'},{key:'tuijianGroups',data:tuijianGroupData,msg:'推荐的圈子'}]
         })
       }
 
@@ -76,7 +79,6 @@ class Group extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if (this.props.uuid != nextProps.uuid) {
-      console.log('jinru',nextProps.uuid);
       this._getGroup(nextProps.uuid);
     }
     return true;
@@ -86,127 +88,135 @@ class Group extends Component {
 
 
   render(){
-    // console.log('我的圈子刷新');
     return(
       <View style={styles.container}>
           <SectionList
             removeClippedSubviews={false}
             keyExtractor={item => item.Id}
-            ref='list'
-            enableEmptySections
-            renderItem={this._renderItem}
             renderSectionHeader={this._renderSectionHeader}
-            SectionSeparatorComponent={this.renderFooter}
-            ItemSeparatorComponent={this.renderSeparator}
+            renderItem={this._renderItem}
+            ItemSeparatorComponent={this._renderSeparator}
             sections={this.state.data}
-            // getItemLayout={this._getItemLayout}
           />
       </View>
     );
   }
 
-
-    renderSeparator = () => {
-      return (
-        <View
-          style={{
-            height: 1,
-            backgroundColor: "#CED0CE",
-            marginLeft: 16,
-          }}
-        />
-      );
-    };
-
-
-
-  _renderItem = (item) => {
-    // console.log(item);
-
-    return (
-        <View style={styles.itemView}>
-            <Text>{item.item.CircleName}</Text>
-        </View>
+  _renderSectionHeader = (section) =>{
+    let length = section.section.key === 'myGroups' ? `(${section.section.data.length-1})`:'';
+    return(
+      <View style={styles.headerView}>
+          <Text style={styles.headerText}>{section.section.msg} {length}</Text>
+      </View>
     )
 
-  }
+  };
 
-  _renderSectionHeader = (section) =>{
-    console.log('section____',section);
-    if (section.section.key === 'myGroups') {
-      return(
-        <View style={styles.headerView}>
-            <Text style={styles.headerText}>{section.section.msg} ({section.section.data.length})</Text>
-        </View>
-      )
-    }else {
-      return(
-        <View style={styles.headerView}>
-            <Text style={styles.headerText}>{section.section.msg}</Text>
-        </View>
+  _renderItem = (item) => {
+
+    if (item.item.Id==='-100') {
+       return(
+         <TouchableHighlight
+           underlayColor={'transparent'}
+           onPress={()=>{
+             console.log('添加更多圈子');
+           }}>
+
+
+           <View style={[styles.itemView,{justifyContent:'center',alignItems :'center'}]}>
+
+             <Image
+               style={{width:25,height:25}}
+               source={require('./add.png')}/>
+             <Text>添加更多圈子</Text>
+           </View>
+         </TouchableHighlight>
+       )
+    }
+    else {
+      return (
+          <View style={styles.itemView}>
+            <View style={{height:ITEM_HEIGHT,width:72,justifyContent:'center',alignItems :'center'}}>
+              <Image
+                style={{width:40,height:40}}
+                source={{url:`${BASEURL}${item.item.CircleImg}`}}/>
+            </View>
+            {
+              item.item.time?
+              <View>
+
+              </View>
+              :
+              <View style={{height:ITEM_HEIGHT,width:width-72,flexDirection:'row',alignItems :'center',justifyContent:'space-between'}}>
+                <View>
+                  <Text style={{color:'#4A4A4A',fontSize:14,fontWeight:'bold'}}>{item.item.CircleName}</Text>
+                  <Text style={{height:8}}/>
+                  <Text style={{color:'#898989',fontSize:13}}>
+                    <Text style={{color:'#4DC1C1',fontSize:13}}>粉丝  </Text>
+                    {item.item.CollectTimes}
+                    <Text style={{color:'#4DC1C1',fontSize:13}}>  帖子  </Text>
+                    {item.item.noteNumber}
+                  </Text>
+                </View>
+                <View>
+                  <TouchableHighlight
+                    underlayColor={'transparent'}
+                    style={{width:ITEM_HEIGHT,height:60,justifyContent:'center',alignItems :'center'}}
+                    onPress={()=>{
+                      console.log('add');
+                    }}
+                    >
+                      <Image
+                        style={{width:25,height:25}}
+                        source={require('./add.png')}/>
+                  </TouchableHighlight>
+
+                </View>
+
+              </View>
+            }
+          </View>
       )
     }
-
-  }
-
-  // _getItemLayout (data,index){
-  //   let [length, separator, header] = [ITEM_HEIGHT, SEPARATOR_HEIGHT, HEADER_HEIGHT];
-  //   return {length, offset: (length + separator) * index + header, index};
-  // }
-
-  renderFooter = () => {
-
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <Text>添加圈子</Text>
-      </View>
-    );
   };
 
-  renderSeparator = () => {
+  _renderSeparator = () => {
     return (
-      <View
-        style={{
-          height: 1,
-          backgroundColor: "#CED0CE",
-          marginLeft: 16,
-        }}
-      />
+      <View style={styles.separator}/>
     );
   };
-
 }
 
 
 const styles = StyleSheet.create({
   container: {
-        flex: 1,
-    },
+    flex: 1,
+    backgroundColor:'white',
 
-    headerView: {
-        justifyContent: 'center',
-        height: HEADER_HEIGHT,
-        paddingLeft: 20,
-        backgroundColor: '#eee'
-    },
-    headerText: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        color: '#3cb775'
-    },
-    itemView: {
-        flexDirection: 'row',
-        padding: 12,
-        alignItems: 'center',
-        height: ITEM_HEIGHT
-    }
+  },
+
+  headerView:{
+    backgroundColor:'white',
+    height: HEADER_HEIGHT,
+    justifyContent:'center',
+
+  },
+  headerText:{
+    left:marginLeft,
+    fontSize: 15,
+    color: '#898989'
+  },
+  separator:{
+    height: 1,
+    backgroundColor: "#CED0CE",
+    marginLeft: marginLeft+56,
+  },
+
+  itemView: {
+    flexDirection: 'row',
+    width:width,
+    height: ITEM_HEIGHT
+  }
 });
 
 function select(store){
