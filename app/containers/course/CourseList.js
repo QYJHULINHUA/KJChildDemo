@@ -7,36 +7,40 @@ import {
   FlatList,
   Dimensions,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 
 
 } from 'react-native';
 
+
+import {BASEURL} from '../../utils/netUtils.js'
+import Toast, {DURATION} from 'react-native-easy-toast'
+
 import CourseTagList from './ CourseTagList.js'
 import { connect } from 'react-redux';
+import {getCourseList} from '../../network/CourseNetApi.js'
+
 const { width } = Dimensions.get('window')
+let dd = [
+  {key:'001',tagTitle:'0-1岁'},
+  {key:'002',tagTitle:'1-3岁'},
+  {key:'003',tagTitle:'3-10岁'},
+];
+
 
 class CourseList extends Component {
   constructor(props) {
     super(props);
     this.state={
-      data:[
-        {key:'001',title:'婴儿运动与智力发育密切相关',url:require('./img/test.png'),money:'免费'},
-        {key:'002',title:'新生儿饮食的护理',url:require('./img/test.png'),money:'免费'},
-        // {key:'003',title:'怎么判断孩子是否吃饱了',url:require('./img/test.png'),money:'¥12.00'},
-        // {key:'004',title:'3个月时可训练宝宝的翻身',url:require('./img/test.png'),money:'免费'},
-        // {key:'005',title:'如何制作混合奶',url:require('./img/test.png'),money:'免费'},
-        // {key:'006',title:'宝宝夜啼怎么哄',url:require('./img/test.png'),money:'¥69.00'},
-        // {key:'007',title:'小宝宝为何会罢奶',url:require('./img/test.png'),money:'免费'},
-        // {key:'008',title:'英语教学需要多元智能理论',url:require('./img/test.png'),money:'免费'},
-        // {key:'009',title:'给宝宝创造学爬的好环境',url:require('./img/test.png'),money:'免费'},
-        // {key:'0010',title:'怎么教孩子数数效果最好',url:require('./img/test.png'),money:'免费'},
-        // {key:'0011',title:'宝宝怎么进行启智训练',url:require('./img/test.png'),money:'免费'},
-        // {key:'0012',title:'音乐魅力',url:require('./img/test.png'),money:'免费'},
-        // {key:'0013',title:'奥尔夫的音乐活动',url:require('./img/test.png'),money:'免费'},
-        // {key:'0014',title:'幼儿语言教育的略谈',url:require('./img/test.png'),money:'免费'},
-        // {key:'0015',title:'珠算',url:require('./img/test.png'),money:'免费'},
-      ]
+      loading: false,
+      data: [],
+      page: 1,
+      error: null,
+      refreshing: false,
+      mainLabel:null,
+      childLabel:null,
+
     }
 
     this._renderItem = this._renderItem.bind(this);
@@ -44,14 +48,124 @@ class CourseList extends Component {
 
   static propTypes = {
     tagListShow:React.PropTypes.bool,//是否显示返回按钮
+    scrollEnabled:React.PropTypes.bool,
+    reqCourseType:React.PropTypes.string,//免费课程、畅销课程、推荐课程
+    limit:React.PropTypes.number,
   }
 
   static defaultProps = {
     tagListShow: true,
+    scrollEnabled:true,
+    reqCourseType:'changxiaokecheng',//默认请求免费课程
+    limit:10,//默认一页请求十条
+  };
+
+  componentDidMount() {
+    this.reqCourseList();
   }
 
+   reqCourseList = () => {
+    const { page,mainLabel,childLabel } = this.state;
+    const {limit,reqCourseType} = this.props;
+    let is_free = true;
+    if (reqCourseType === 'isFree') {
+      is_free = true;
+    }else if (reqCourseType === 'changxiaokecheng') {
+      is_free = false;
+    }else {
+      is_free = true;
+    }
+
+    let formData = {
+      page:page,
+      mainLabel:mainLabel,
+      childLabel:childLabel,
+      limit:limit,
+      is_free:is_free,
+
+    }
+
+    this.setState({ loading: true });
+    getCourseList(formData,(responsedata)=>{
+      let code = responsedata['code'];
+      console.log(responsedata);
+      if (code === '1') {
+        if (responsedata['data'].length > 0) {
+          this.setState({
+            data: page === 1 ? responsedata['data'] : [...this.state.data, ...responsedata['data']],
+            error: responsedata['msg'] || null,
+            loading: false,
+            refreshing: false
+          });
+
+        }else {
+          this.refs.toast.show(responsedata['msg']);
+          this.setState({
+            data:[...this.state.data, ...responsedata['data']],
+            page: this.state.page > 1 ? this.state.page-1:1,
+            error:responsedata['msg'] || null,
+            loading: false,
+            refreshing: false
+          });
+
+        }
 
 
+      }else {
+        console.log('加载数据失败');
+        this.refs.toast.show(responsedata['msg']);
+        this.setState({
+          data:this.props.data,
+          page: this.state.page > 1 ? this.state.page-1:1,
+          error:responsedata['msg'] || null,
+          loading: false,
+          refreshing: false
+        });
+      }
+    })
+
+  };
+
+  handleRefresh = () => {
+    console.log('ssss');
+    this.setState(
+      {
+        page: 1,
+        refreshing: true
+      },
+      () => {
+        this.reqCourseList();
+      }
+    );
+  };
+
+  handleLoadMore = () => {
+    console.log("滑动到底部了");
+
+    this.setState(
+      {
+        page: this.state.page + 1
+      },
+      () => {
+        this.reqCourseList();
+      }
+    );
+  };
+
+  renderFooter = () => {
+    if (!this.state.loading) return null;
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: "#CED0CE"
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
 
   _renderItem = ({item}) => (
     <TouchableHighlight
@@ -60,12 +174,13 @@ class CourseList extends Component {
         this.props.onPressCell(item);
       }}>
       <View style={{width:width/2,height:210,justifyContent:'center',alignItems:'center'}}>
-        <Image resizeMode='stretch' style={{width:width/2 - 20,height:90}} source={item.url} />
+        <Image resizeMode='stretch' style={{width:width/2 - 20,height:90}}
+        source={{url:`${BASEURL}${item.ProImg}`}} />
         <View style={{height:10}}/>
         <View style={{width:width/2-20,height:90,}}>
-          <Text style={{color:'#4A4A4A',fontSize:14,fontWeight:'bold'}}>{item.title}</Text>
-          <Text style={{top:2,color:'#898989',fontSize:13 ,width:width/2-20}} numberOfLines={2}>课程简介文字课程简介文字课程简介简介文字课程简介文字课程简介文字课程简介文字课程简介文字</Text>
-          <Text style={{top:5,color:'red',fontSize:12}}>{item.money}</Text>
+          <Text style={{color:'#4A4A4A',fontSize:14,fontWeight:'bold'}}>{item.ProName}</Text>
+          <Text style={{top:2,color:'#898989',fontSize:13 ,width:width/2-20}} numberOfLines={2}>{item.ProDesc}</Text>
+          <Text style={{top:5,color:'red',fontSize:12}}>{item.ProScore==='0'?'免费':`${item.ProScore}积分`}</Text>
         </View>
 
       </View>
@@ -81,21 +196,7 @@ class CourseList extends Component {
 
   render(){
 
-    let dd = [
-      {key:'001',tagTitle:'0-1岁'},
-      {key:'002',tagTitle:'1-3岁'},
-      {key:'003',tagTitle:'3-10岁'},
-      {key:'004',tagTitle:'肢体行知'},
-      {key:'0011',tagTitle:'0-1岁'},
-      {key:'0021',tagTitle:'1-3岁'},
-      {key:'0031',tagTitle:'3-10岁'},
-      {key:'0041',tagTitle:'肢体行知'},
-    ];
-
-
     return(
-
-
       <View style={styles.container}>
         {
           this.props.tagListShow?<View style={{backgroundColor:'#F3F3F3',height:50}}>
@@ -107,15 +208,24 @@ class CourseList extends Component {
 
         }
 
-
-
         <View style={{height:10}}/>
 
         <FlatList
           data={this.state.data}
+          keyExtractor={item => item.Id}
+          renderItem={this._renderItem}
           numColumns={2}
-          initialNumToRender={6}
-          renderItem={this._renderItem}/>
+          scrollEnabled={this.props.scrollEnabled}
+          onRefresh={this.handleRefresh}
+          onEndReached={this.handleLoadMore}
+          refreshing={this.state.refreshing}
+
+          ListFooterComponent={this.renderFooter}
+          onEndReachedThreshold={0.1}
+          />
+          <Toast ref="toast" position="center"/>
+
+
       </View>
 
     );

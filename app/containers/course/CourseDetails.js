@@ -29,8 +29,6 @@ class CourseDetails extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-
-
     header:<HeaderView tilte={navigation.state.params.courseItem.title}  showBack={true} backBtnOnPress={()=>{
       navigation.goBack();
     }} />,

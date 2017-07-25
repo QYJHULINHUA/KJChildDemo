@@ -1,6 +1,6 @@
 
 // http://10.20.10.39/Api/Register/sendMobileCode
-const BASEURL = 'http://10.20.10.39';
+export const BASEURL = 'http://10.20.10.39';
 var reqUrl = {
   baseUrl:BASEURL,
   registUrl:BASEURL + '/Api/Register/addUser',
@@ -9,6 +9,9 @@ var reqUrl = {
 
   myGroups:BASEURL + '/api/Circle/myFocusCircle',
   tuijianGroups:BASEURL + '/api/Circle/recommendCircle',
+
+  /**免费课程、畅销课程*/
+  getCourseList:BASEURL + '/Api/Course/freeAdmission',
 };
 
 

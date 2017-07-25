@@ -13,6 +13,7 @@ import HeaderView from '../../components/JKHeader/HeaderView1.js'
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import {navBarStyle} from '../../utils/KJStylesE.js'
 import CourseList from './CourseList.js'
+import SpecilaRecommend from './SpecialRecommend.js'
 
 
 class Course extends Component {
@@ -64,14 +65,8 @@ class Course extends Component {
               navigate('CourseDetails',{courseItem:item})
             }}
             tabLabel='推荐好课'/>
-          <CourseList
-            onPressCell={(item)=>{
-              console.log(`点击课程： ${item}`);
-
-              const { navigate } = this.props.navigation;
-              navigate('CourseDetails',{courseItem:item})
-            }}
-            tabLabel='免费专题'/>
+          <SpecilaRecommend
+            tabLabel='专题推荐'/>
 
       </ScrollableTabView>
 

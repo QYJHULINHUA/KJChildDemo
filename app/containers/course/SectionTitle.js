@@ -8,8 +8,8 @@ const { width } = Dimensions.get('window')
 const sectionHeight = 40;
 import {navBarStyle} from '../../utils/KJStylesE.js'
 
-export const SectionTitle = ({leftMargin,sectionTitle}) => (
-  <View style={{height:sectionHeight,borderBottomWidth:1,borderBottomColor:'#D2D2D2'}}>
+export const SectionTitle = ({leftMargin,sectionTitle,sectionTitleStyle}) => (
+  <View style={[{height:sectionHeight,borderBottomWidth:1,borderBottomColor:'#D2D2D2'},sectionTitleStyle]}>
     <View style={{top:10,height:30,alignItems:'center',flexDirection:'row'}}>
       <Text style={{width:leftMargin}}/>
       <View style={{width:3,height:18,backgroundColor:navBarStyle.theme_color}}/>

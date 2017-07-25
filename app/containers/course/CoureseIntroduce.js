@@ -97,6 +97,7 @@ class CourseIntroduce extends Component {
 
             <CourseList
               tagListShow={false}
+              scrollEnabled={false}
               onPressCell={(item)=>{
                 console.log(`点击课程： ${item}`);
 
