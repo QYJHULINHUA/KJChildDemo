@@ -113,7 +113,7 @@ export default class CourseEvaluate extends Component {
 
 
   render(){
-    console.log(this.state.data);
+    console.log('this.state.data____???____',this.state.data);
     return(
       <View style={styles.container}>
         <SectionTitle

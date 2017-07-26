@@ -31,7 +31,12 @@ function getCourseEvaluate(bodydata,callback) {
   NetWork_Post(netapi,bodydata,callback,reqError);
 }
 
+function commitCourseEvaluate(bodydata,callback) {
+  console.log('提交课程评论',bodydata);
 
+  let netapi = 'commitCourseEvaluate',reqError = {error:{code:'-1',msg:'提交评论失败'}};
+  NetWork_Post(netapi,bodydata,callback,reqError);
+}
 
 
 
@@ -40,4 +45,5 @@ export {
   getSpecialRecommendationList,
   getcourseDetail,
   getCourseEvaluate,
+  commitCourseEvaluate,
 }
