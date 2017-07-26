@@ -19,7 +19,7 @@ export default class CourseCatalogue extends Component {
   }
 
   static defaultProps ={
-    sourceData:'<p> </p >',
+    sourceData:'<p>  </p >',
 
   }
 
