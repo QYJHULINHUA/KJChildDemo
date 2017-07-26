@@ -12,6 +12,7 @@ import Regist from './Mine/Regist.js'
 import Login from './Mine/Login.js'
 import Course from './course/course.js'
 import CourseDetails from './course/CourseDetails.js'
+import EvaluateCommit from './course/EvaluateCommit.js'
 
 
 import {tabBarIconStyle} from '../utils/KJStylesE.js'
@@ -61,6 +62,7 @@ const SimpleAppReactNavigation = StackNavigator(
     Evaluation:{screen:Evaluation},
     Course:{screen:Course},
     CourseDetails:{screen:CourseDetails},
+    EvaluateCommit:{screen:EvaluateCommit},
   },
   {
     initialRouteName:'RootTabNav',

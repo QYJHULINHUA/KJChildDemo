@@ -8,6 +8,7 @@ import {
   Text,
   Dimensions,
   Image,
+  Alert,
 
 
 } from 'react-native';
@@ -29,6 +30,8 @@ class CourseDetails extends Component {
   constructor(props) {
     super(props);
     this.makeRemoteRequest=this.makeRemoteRequest.bind(this);
+    this._clickEvaluatlsCommit=this._clickEvaluatlsCommit.bind(this);
+
 
     this.state={
       detailsData:{},
@@ -70,6 +73,25 @@ class CourseDetails extends Component {
     })
   }
 
+  _clickEvaluatlsCommit(str){
+
+    const { navigate } = this.props.navigation;
+    if (!this.props.uuid) {
+      Alert.alert(
+        '温馨提示',
+        '您尚未登录，是否登录用户',
+        [
+          {text: '确定', onPress: () => navigate('Login')},
+          {text: '取消', onPress: () => console.log('cancle Pressed!')},
+        ],
+      )
+
+    }else {
+      navigate('EvaluateCommit',{proId:this.state.detailsData.Id})
+    }
+
+  }
+
   render(){
 
     return(
@@ -88,8 +110,14 @@ class CourseDetails extends Component {
         >
 
           <CourseIntroduce sourceData={this.state.detailsData} tabLabel='介绍'/>
+
           <Text tabLabel='目录'>ttt</Text>
-          <CourseEvaluate sourceData={this.state.detailsData} tabLabel='评价'/>
+
+          <CourseEvaluate
+            evaluateOnPress={this._clickEvaluatlsCommit}
+            sourceData={this.state.detailsData}
+            tabLabel='评价'/>
+
           <Text tabLabel='咨询'>ttt</Text>
 
 

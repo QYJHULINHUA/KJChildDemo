@@ -30,6 +30,10 @@ export default class CourseEvaluate extends Component {
     }
   }
 
+  static propsTypes = {
+    evaluateOnPress: React.PropTypes.func.isRequired,
+  }
+
   static defaultProps ={
     sourceData:{},
 
@@ -74,9 +78,8 @@ export default class CourseEvaluate extends Component {
         </View>
 
         <View style={{width:width-76,height:100,}}>
-          <Text style={{left:5,top:10,right:10,height:50}}>
+          <Text style={{left:5,top:10,right:10,height:50,color:'#898989'}}>
             {item.item.Content}
-
           </Text>
 
           <View style={{left:5,top:10,right:10,height:20,flexDirection:'row',alignItems:'center'}}>
@@ -85,15 +88,15 @@ export default class CourseEvaluate extends Component {
               starSize={18}
               disabled={false}
               maxStars={5}
-              rating={2}
+              rating={parseInt(item.item.Flag)}
               selectedStar={(rating) => this.onStarRatingPress(rating)}
               starColor={navBarStyle.theme_color}/>
             </View>
             <Text>    </Text>
-            <Text style={{color:'#898989'}}>{2.0}分</Text>
+            <Text style={{color:'#898989'}}>{parseInt(item.item.Flag)}分</Text>
 
             <Text>    </Text>
-            <Text style={{color:'#898989'}}>2017/02/11</Text>
+            <Text style={{color:'#898989'}}>{item.item.addtime}</Text>
 
           </View>
 
@@ -128,7 +131,7 @@ export default class CourseEvaluate extends Component {
             btn_text='评价'
             btnUnderlayColor='#4DC1C1'
             onPress={()=>{
-              console.log('评价button');
+              this.props.evaluateOnPress('点击评价')
             }}
             btnStyle={{height:60,width:width,backgroundColor:'#4DC1C1',}}/>
 
