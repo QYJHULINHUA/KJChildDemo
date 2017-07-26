@@ -16,6 +16,7 @@ export const SectionTitle = ({leftMargin,sectionTitle,sectionTitleStyle}) => (
       <Text style={{left:4,fontWeight:'400'}}>{sectionTitle}</Text>
     </View>
 
+
   </View>
 );
 

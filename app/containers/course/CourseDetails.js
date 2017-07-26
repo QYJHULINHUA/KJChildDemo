@@ -22,6 +22,7 @@ import {navBarStyle} from '../../utils/KJStylesE.js'
 import CourseIntroduce from './CoureseIntroduce.js'
 import CourseEvaluate from './CourseEvaluate'
 import {getcourseDetail} from '../../network/CourseNetApi.js'
+import CourseCatalogue from './CourseCatalogue.js'
 import {BASEURL} from '../../utils/netUtils.js'
 
 
@@ -93,7 +94,7 @@ class CourseDetails extends Component {
   }
 
   render(){
-
+    console.log('this.props.navigation.state.params.courseItem',this.props.navigation.state.params.courseItem);
     return(
       <View style={styles.container}>
         <Image
@@ -111,7 +112,7 @@ class CourseDetails extends Component {
 
           <CourseIntroduce sourceData={this.state.detailsData} tabLabel='介绍'/>
 
-          <Text tabLabel='目录'>ttt</Text>
+          <CourseCatalogue sourceData={this.state.detailsData.ProMes} tabLabel='目录'/>
 
           <CourseEvaluate
             evaluateOnPress={this._clickEvaluatlsCommit}

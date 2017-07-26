@@ -1,7 +1,4 @@
 
-
-
-
 import React from 'react';
 import {
   View,
@@ -47,7 +44,6 @@ export default class CourseTagList extends React.PureComponent {
   constructor(props) {
       super(props);
       this.state = { keyStr: '' };
-
     }
 
   _onPressItem = (idStr: string) => {

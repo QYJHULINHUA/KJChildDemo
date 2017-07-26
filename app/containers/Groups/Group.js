@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 
+
 import HeaderView from '../../components/JKHeader/HeaderView1.js'
 import {tabBarIconStyle} from '../../utils/KJStylesE.js'
 import {getTuiJianGroup ,getMyGroup} from '../../network/GroupNet.js'
@@ -88,6 +89,7 @@ class Group extends Component {
 
 
   render(){
+
     return(
       <View style={styles.container}>
           <SectionList
@@ -98,6 +100,8 @@ class Group extends Component {
             ItemSeparatorComponent={this._renderSeparator}
             sections={this.state.data}
           />
+
+
       </View>
     );
   }
