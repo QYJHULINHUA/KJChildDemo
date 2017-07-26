@@ -67,7 +67,6 @@ export default class CourseEvaluate extends Component {
     console.log(rating);
   }
   _renderItem = (item) => {
-    console.log(item);
     return(
       <View style={{flexDirection:'row',width:width,height:100,borderBottomWidth:1,borderBottomColor:'#D2D2D2'}}>
         <View style={{width:76,height:100}}>
@@ -113,7 +112,6 @@ export default class CourseEvaluate extends Component {
 
 
   render(){
-    console.log('this.state.data____???____',this.state.data);
     return(
       <View style={styles.container}>
         <SectionTitle
