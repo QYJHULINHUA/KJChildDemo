@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Home from './Home/Home.js'
 import Groups from './Groups/Group.js'
+import Fair from './Fair/Fair.js'
 import Mine from './Mine/Mine.js'
 import MyBaby from '../pages/myBaby.js'
 import Evaluation from '../pages/Evaluation.js'
@@ -30,6 +31,7 @@ const RootTabNav = TabNavigator(
   {
     Home: { screen: Home },
     Groups: { screen: Groups },
+    Fair:{screen:Fair},
     Mine: { screen: Mine },
   },
   {

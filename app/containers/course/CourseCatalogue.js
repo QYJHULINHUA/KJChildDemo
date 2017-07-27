@@ -26,7 +26,9 @@ export default class CourseCatalogue extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <WebView source={{html:this.props.sourceData}} />
+        <WebView
+          scalesPageToFit={true}
+          source={{html:this.props.sourceData}} />
       </View>
     );
   }
