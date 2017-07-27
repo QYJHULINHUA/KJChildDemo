@@ -2,6 +2,7 @@
 
 
 import {NetWork_Post,NetWork_Get} from '../utils/netUtils.js';
+let CryptoJS = require("crypto-js");
 
 function getCourseList(bodydata,callback) {
   console.log('请求课程列表',bodydata);
@@ -18,11 +19,16 @@ function getSpecialRecommendationList(bodydata,callback) {
 }
 
 function getcourseDetail(bodydata,callback) {
-  console.log('请求课程详情',bodydata);
+
+
   let param = 'param';
   bodydata['UserId']? param=param+bodydata['UserId']:null;
   bodydata['id']? param=param+bodydata['id']:null;
-  console.log('param',param);
+  //  密码md5 加密
+  let md51 = CryptoJS.MD5(param).toString();
+  bodydata.keyStr=md51;
+
+  console.log('请求课程详情',bodydata);
 
   let netapi = 'courseDetail',reqError = {error:{code:'-1',msg:'加载数据失败'}};
   NetWork_Post(netapi,bodydata,callback,reqError);
