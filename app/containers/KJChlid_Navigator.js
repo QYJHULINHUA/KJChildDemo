@@ -37,7 +37,7 @@ const RootTabNav = TabNavigator(
   {
     swipeEnabled: false,
     animationEnabled: false,
-    lazyLoad: false,
+    lazyLoad: true,
     navigationOptions:{
       headerLeft:null,
       gesturesEnabled:false,

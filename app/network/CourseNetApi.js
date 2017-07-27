@@ -19,6 +19,10 @@ function getSpecialRecommendationList(bodydata,callback) {
 
 function getcourseDetail(bodydata,callback) {
   console.log('请求课程详情',bodydata);
+  let param = 'param';
+  bodydata['UserId']? param=param+bodydata['UserId']:null;
+  bodydata['id']? param=param+bodydata['id']:null;
+  console.log('param',param);
 
   let netapi = 'courseDetail',reqError = {error:{code:'-1',msg:'加载数据失败'}};
   NetWork_Post(netapi,bodydata,callback,reqError);
