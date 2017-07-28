@@ -16,7 +16,7 @@ function getCourseList(bodydata,callback) {
   //  密码md5 加密
   let md51 = CryptoJS.MD5(param).toString();
   bodydata.keyStr=md51;
-  
+
   console.log('请求课程列表',bodydata);
 
   let netapi = 'getCourseList',reqError = {error:{code:'-1',msg:'加载数据失败'}};

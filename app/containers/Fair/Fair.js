@@ -59,7 +59,9 @@ class Fair extends Component {
 
   }
 
-
+  clickShangPingCell(item){
+    console.log('点击商品：',item);
+  }
 
   render(){
 
@@ -97,21 +99,28 @@ class Fair extends Component {
                 leftMargin={16}
                 getMorePress={this._onPressSectionItem}
                 sectionTitle='以物换物'/>
-              <FairHorList fairTypeStr='以物换物'/>
+              <FairHorList
+                clickCell={this.clickShangPingCell}
+                fairTypeStr='以物换物'/>
 
               <SeparatorLine/>
               <FairSectionItem
                 leftMargin={16}
                 getMorePress={this._onPressSectionItem}
                 sectionTitle='积分兑换'/>
-              <FairHorList fairTypeStr='积分兑换'/>
+              <FairHorList
+                clickCell={this.clickShangPingCell}
+                fairTypeStr='积分兑换'/>
 
               <SeparatorLine/>
+
               <FairSectionItem
                 leftMargin={16}
                 getMorePress={this._onPressSectionItem}
                 sectionTitle='拍卖'/>
-              <FairHorList containerStyle={{height:280}} fairTypeStr='拍卖'/>
+              <FairHorList
+                clickCell={this.clickShangPingCell}
+                containerHeight={280} fairTypeStr='拍卖'/>
 
       </ScrollView>
     );

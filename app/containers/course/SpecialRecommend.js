@@ -20,7 +20,7 @@ class SpecilaRecommend extends Component {
   }
 
   makeRemoteRequest = () => {
-    getSpecialRecommendationList(null,(responsedata)=>{
+    getSpecialRecommendationList({},(responsedata)=>{
       let code = responsedata['code'];
       let msg = responsedata['msg'];
       let data = responsedata['data'];
