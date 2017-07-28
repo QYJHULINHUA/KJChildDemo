@@ -99,7 +99,7 @@ class CourseDetails extends Component {
       <View style={styles.container}>
         <Image
         style={{height:180}}
-        source={{url:`${BASEURL}${this.state.detailsData.ProImg}`}}
+        source={{uri:`${BASEURL}${this.state.detailsData.ProImg}`}}
       />
 
       <ScrollableTabView

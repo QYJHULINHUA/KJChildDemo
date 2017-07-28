@@ -90,7 +90,7 @@ class Fair extends Component {
 
             <Image
               style={{width:width,height:130,}}
-              source={{url:'http://img.kutoo8.com/upload/image/71961728/dn201308081006_960x540.jpg'}}/>
+              source={{uri:'http://img.kutoo8.com/upload/image/71961728/dn201308081006_960x540.jpg'}}/>
 
               <NavCard onPressFun={this._onPressSectionItem}/>
 

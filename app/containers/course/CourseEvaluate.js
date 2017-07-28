@@ -74,7 +74,7 @@ export default class CourseEvaluate extends Component {
         <View style={{width:76,height:100}}>
           <Image
             style={{top:10,left:16,width:50,height:50}}
-            source={{url:`${BASEURL}${item.item.HeadImg}`}} />
+            source={{uri:`${BASEURL}${item.item.HeadImg}`}} />
 
         </View>
 

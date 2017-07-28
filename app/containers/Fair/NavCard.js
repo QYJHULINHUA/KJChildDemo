@@ -47,8 +47,8 @@ export const NavCard = ({listData1,onPressFun}) => (
 
 NavCard.defaultProps = {
   listData1:[
-    {title:'积分兑换',url:{url:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}},
-    {title:'以物换物',url:{url:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}},
-    {title:'拍卖',url:{url:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}}],
+    {title:'积分兑换',url:{uri:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}},
+    {title:'以物换物',url:{uri:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}},
+    {title:'拍卖',url:{uri:'http://www.haopic.me/wp-content/uploads/2015/12/20151229084606577.png'}}],
 
 }

@@ -175,7 +175,7 @@ class CourseList extends Component {
       }}>
       <View style={{width:width/2,height:210,justifyContent:'center',alignItems:'center'}}>
         <Image resizeMode='stretch' style={{width:width/2 - 20,height:90}}
-        source={{url:`${BASEURL}${item.ProImg}`}} />
+        source={{uri:`${BASEURL}${item.ProImg}`}} />
         <View style={{height:10}}/>
         <View style={{width:width/2-20,height:90,}}>
           <Text style={{color:'#4A4A4A',fontSize:14,fontWeight:'bold'}}>{item.ProName}</Text>

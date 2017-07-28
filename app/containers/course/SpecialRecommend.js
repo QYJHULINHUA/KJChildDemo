@@ -58,7 +58,7 @@ class SpecilaRecommend extends Component {
       <View style={{width:width,height:240}}>
         <Image
         style={{height:150}}
-        source={{url:`${BASEURL}${item.Image}`}}
+        source={{uri:`${BASEURL}${item.Image}`}}
       />
       <Text>{item.AdName}</Text>
       <Text>{item.AdName}</Text>

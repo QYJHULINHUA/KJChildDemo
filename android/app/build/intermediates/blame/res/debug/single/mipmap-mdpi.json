@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/Users/hulinhua/Desktop/jkwork/KJChildDemo/android/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/Users/hulinhua/Desktop/jkwork/KJChildDemo/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
         "merged": "/Users/linhuahu/Desktop/JKWork/demoCode/KJChlidDemo/android/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
         "source": "/Users/linhuahu/Desktop/JKWork/demoCode/KJChlidDemo/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     }

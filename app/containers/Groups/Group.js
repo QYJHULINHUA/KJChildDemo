@@ -142,7 +142,7 @@ class Group extends Component {
             <View style={{height:ITEM_HEIGHT,width:72,justifyContent:'center',alignItems :'center'}}>
               <Image
                 style={{width:40,height:40}}
-                source={{url:`${BASEURL}${item.item.CircleImg}`}}/>
+                source={{uri:`${BASEURL}${item.item.CircleImg}`}}/>
             </View>
             {
               item.item.time?

@@ -49,7 +49,7 @@ class MyListItem extends Component {
 
                 <Image
                   style={{width:contenCellWidth-2,height:contenCellWidth}}
-                  source={{url:'https://img14.360buyimg.com/n0/jfs/t3127/302/6759817728/310883/d8845fa8/58ad06d4N48f50019.jpg'}}
+                  source={{uri:'https://img14.360buyimg.com/n0/jfs/t3127/302/6759817728/310883/d8845fa8/58ad06d4N48f50019.jpg'}}
                 />
               </View>
 
