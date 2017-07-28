@@ -33,7 +33,7 @@ class MyListItem extends React.PureComponent {
   }
 }
 
-export default class CourseTagList extends React.PureComponent {
+export default class OrderTag extends React.PureComponent {
 
   static propTypes = {
     tagData:React.PropTypes.array.isRequired,
@@ -62,7 +62,12 @@ export default class CourseTagList extends React.PureComponent {
 
   );
 
+  componentDidMount() {
+    // this.setState({ keyStr: this.props.tagData[0].key})
+  }
+
   render(){
+
     return(
 
       <View style={styles.container}>
@@ -81,6 +86,7 @@ export default class CourseTagList extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'#F3F3F3',
   },
   itemContainer:{
     width:100,

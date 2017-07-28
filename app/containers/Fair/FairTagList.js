@@ -33,7 +33,7 @@ class MyListItem extends React.PureComponent {
   }
 }
 
-export default class CourseTagList extends React.PureComponent {
+export default class FairTagList extends React.PureComponent {
 
   static propTypes = {
     tagData:React.PropTypes.array.isRequired,
@@ -62,7 +62,12 @@ export default class CourseTagList extends React.PureComponent {
 
   );
 
+  componentDidMount() {
+    this.setState({ keyStr: this.props.tagData[0].key})
+  }
+
   render(){
+
     return(
 
       <View style={styles.container}>

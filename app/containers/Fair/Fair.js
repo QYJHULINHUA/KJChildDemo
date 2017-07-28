@@ -41,11 +41,18 @@ class Fair extends Component {
       isRefreshing:false,
     }
     this._onRefresh=this._onRefresh.bind(this);
+    this._onPressSectionItem=this._onPressSectionItem.bind(this);
+    this.clickShangPingCell=this.clickShangPingCell.bind(this);
+
+
 
   }
 
   _onPressSectionItem(str:string){
-    console.log(str);
+
+
+    const { navigate } = this.props.navigation;
+    navigate('FairCategory',{CategoryName:str})
   }
 
   _onRefresh() {
@@ -60,7 +67,14 @@ class Fair extends Component {
   }
 
   clickShangPingCell(item){
-    console.log('点击商品：',item);
+
+    console.log('点击商品：',item.item);
+    // if (item.item.msg === '积分兑换') {
+    //   const { navigate } = this.props.navigation;
+    //   navigate('FairScorePage',{item:item.item})
+    // }
+
+
   }
 
   render(){
@@ -126,11 +140,6 @@ class Fair extends Component {
     );
   }
 }
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

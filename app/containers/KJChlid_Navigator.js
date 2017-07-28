@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Home from './Home/Home.js'
 import Groups from './Groups/Group.js'
 import Fair from './Fair/Fair.js'
+import FairCategory from './Fair/FairCategory'
+import FairScorePage from './Fair/FairScorePage'
 import Mine from './Mine/Mine.js'
 import MyBaby from '../pages/myBaby.js'
 import Evaluation from '../pages/Evaluation.js'
@@ -14,6 +16,7 @@ import Login from './Mine/Login.js'
 import Course from './course/course.js'
 import CourseDetails from './course/CourseDetails.js'
 import EvaluateCommit from './course/EvaluateCommit.js'
+
 
 
 import {tabBarIconStyle} from '../utils/KJStylesE.js'
@@ -65,6 +68,8 @@ const SimpleAppReactNavigation = StackNavigator(
     Course:{screen:Course},
     CourseDetails:{screen:CourseDetails},
     EvaluateCommit:{screen:EvaluateCommit},
+    FairCategory:{screen:FairCategory},
+    FairScorePage:{screen:FairScorePage},
   },
   {
     initialRouteName:'RootTabNav',
