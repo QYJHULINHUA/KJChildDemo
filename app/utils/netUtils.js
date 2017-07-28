@@ -19,6 +19,12 @@ var reqUrl = {
   /** 专题推荐*/
   getSpecialRecommendation:BASEURL + '/api/Course/specialRecommendation',
 
+  /** 集市*/
+  commodityWithScore:BASEURL + '/api/Shop/good',//积分兑换
+  commodityWithCommodity:BASEURL + '/api/Shop/exChange',//与物换物
+  commodityWithAuction:BASEURL + '/api/Shop/auction',//拍卖列表
+  
+
 };
 
 

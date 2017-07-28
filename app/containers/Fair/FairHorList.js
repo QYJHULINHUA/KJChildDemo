@@ -12,105 +12,25 @@ import {
 } from 'react-native';
 const { width } = Dimensions.get('window')
 
-class MyListItem extends Component {
-  constructor(props) {
-    super(props);
-  }
+import {getCommodityList} from '../../network/FairNetApi'
+import CommodityCellItem from './CommodityCellItem'
 
-  static propTypes = {
-    cellStyle:React.PropTypes.string.isRequired,//是否显示返回按钮
-    cellHeight:React.PropTypes.number.isRequired,
-    clickCell:React.PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    inputData:{},
-  };
-
-  render(){
-    console.log('FairHorList');
-    let cellWidth = width/2;
-    let contenCellWidth= cellWidth-40;
-    let cell_style = this.props.cellStyle;
-
-    return(
-
-      <TouchableHighlight
-        underlayColor={'transparent'}
-        onPress={()=>{
-          this.props.clickCell(this.props.inputData);
-        }}
-        >
-
-          <View style={{height:this.props.cellHeight,width:cellWidth}}>
-
-            <View style={{left:20,width:contenCellWidth,height:this.props.cellHeight,justifyContent:'center',}}>
-              <View style={{borderWidth:1,borderColor:'#D2D2D2',}}>
-
-                <Image
-                  style={{width:contenCellWidth-2,height:contenCellWidth}}
-                  source={{uri:'https://img14.360buyimg.com/n0/jfs/t3127/302/6759817728/310883/d8845fa8/58ad06d4N48f50019.jpg'}}
-                />
-              </View>
-
-              {cell_style==='拍卖'?<Text style={{width:contenCellWidth,height:20,backgroundColor:'#FD7801',textAlign:'center',fontSize:16}}>正在拍卖</Text>:null}
-
-              <View style={{height:25}}>
-                <Text style={{top:8,height:17,fontSize:16}}>商品名称</Text>
-              </View>
-
-              {cell_style==='以物换物'?
-              <View>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:12,color:"#898989"}}>商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情</Text>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:10,color:"#898989"}}>发布于 2017.7.1</Text>
-              </View>
-
-              :null}
-
-              {cell_style==='积分兑换'?
-              <View>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:12,color:"red"}}>积分600</Text>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:10,color:"#898989"}}>市场参考价 1000 元</Text>
-              </View>
-
-              :null}
-
-              {cell_style==='拍卖'?
-              <View>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:12,color:"red"}}>当前价 ¥453.00</Text>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:10,color:"#898989"}}>距离结束 1天12小时18分</Text>
-                <Text numberOfLines={1} style={{width:contenCellWidth,fontSize:10,color:"#898989"}}>围观人数 13456人</Text>
-              </View>
-
-              :null}
-
-
-            </View>
-
-          </View>
-      </TouchableHighlight>
-
-    )
-  }
-}
 
 export default class FairHorList extends Component {
   constructor(props) {
     super(props);
 
     this.state={
-      data:[
-        {key:'1',title:'001'},
-        {key:'2',title:'002'},
-        {key:'3',title:'003'},
-      ],
+      data:[],
     }
 
     this._renderItem=this._renderItem.bind(this);
+    this.makeRemoteRequest=this.makeRemoteRequest.bind(this);
+
   }
 
   static propTypes = {
-    fairTypeStr:React.PropTypes.string.isRequired,//是否显示返回按钮
+    fairTypeStr:React.PropTypes.string.isRequired,
     containerHeight:React.PropTypes.number,
     clickCell:React.PropTypes.func.isRequired,
   }
@@ -119,10 +39,50 @@ export default class FairHorList extends Component {
     containerHeight:250,
   };
 
+  componentDidMount() {
+    this.makeRemoteRequest();
+  }
+
+  makeRemoteRequest(){
+    reqStr = this.props.fairTypeStr;
+    let req_string = 'defaultString';
+    let formData = {
+      limit:4,
+    };
+
+    if (reqStr === '以物换物') {
+      req_string = 'Commodity';
+    }else if (reqStr === '积分兑换') {
+      req_string = 'Score';
+    }else if (reqStr === '拍卖') {
+      req_string = 'Auction';
+    }else {
+
+    }
+
+    getCommodityList(req_string,formData,(responseData)=>{
+
+      console.log('集市回调',responseData);
+
+      let code = responseData['code'];
+      let data = responseData['data'];
+
+      if (code === '1') {
+        this.setState({
+          data:data,
+        })
+
+      }
+    });
+
+
+
+  }
+
   _renderItem(item){
     console.log(item);
     return(
-      <MyListItem
+      <CommodityCellItem
         clickCell={this.props.clickCell}
         inputData={item}
         cellStyle={this.props.fairTypeStr}
@@ -136,7 +96,7 @@ export default class FairHorList extends Component {
           removeClippedSubviews={false}
           horizontal={true}
           data={this.state.data}
-          keyExtractor={this._keyExtractor}
+          keyExtractor={item => item.Id}
           renderItem={this._renderItem}
         />
       </View>
