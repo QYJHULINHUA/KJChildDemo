@@ -51,6 +51,8 @@ export default class CourseEvaluate extends Component {
       getCourseEvaluate(formData,(responseData)=>{
         let code = responseData['code'];
         let data = responseData['data'];
+
+        console.log('this.state.data',responseData);
         if (code === '1') {
           this.setState({
             data:data,
@@ -112,6 +114,8 @@ export default class CourseEvaluate extends Component {
 
 
   render(){
+
+
     return(
       <View style={styles.container}>
         <SectionTitle

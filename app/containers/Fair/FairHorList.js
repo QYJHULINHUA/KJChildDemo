@@ -56,6 +56,7 @@ export default class FairHorList extends Component {
     return(
       <View style={[styles.container,this.props.containerStyle]}>
         <FlatList
+          removeClippedSubviews={false}
           data={this.state.data}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}

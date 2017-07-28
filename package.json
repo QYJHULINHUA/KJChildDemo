@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"crypto-js": "^3.1.9-1",
+		"fbjs": "^0.8.14",
 		"react": "16.0.0-alpha.6",
 		"react-native": "0.44.0",
 		"react-native-easy-toast": "^1.0.6",
